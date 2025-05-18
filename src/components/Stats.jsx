@@ -1,6 +1,6 @@
 import { calculateCoffeeStats, calculateCurrentCaffeineLevel, getTopThreeCoffees, statusLevels } from "../utils";
-
 import { useAuth } from "../context/AuthContext";
+import { useCurrentCaffeineLevel } from "../hooks/useCurrentCaffieneLevel";
 
 function StatCard({ lg, title, children }) {
   return (
@@ -16,7 +16,7 @@ export default function Stats() {
 
   const stats = calculateCoffeeStats(globalData);
 
-  const caffeineLevel = calculateCurrentCaffeineLevel(globalData);
+  const caffeineLevel = useCurrentCaffeineLevel(globalData);
   const warningLevel =
     caffeineLevel < statusLevels["low"].maxLevel
       ? "low"
@@ -55,13 +55,13 @@ export default function Stats() {
           </p>
         </StatCard>
 
-        <StatCard title="Daily cost (₹)">
+        <StatCard title="Daily Cost (₹)">
           <p>
             $ <span className="stat-text">{stats.daily_cost}</span>mg
           </p>
         </StatCard>
 
-        <StatCard title="Total cost (₹)">
+        <StatCard title="Total Cost (₹)">
           <p>
             ₹ <span className="stat-text">{stats.total_cost}</span>
           </p>

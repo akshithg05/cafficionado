@@ -58,7 +58,7 @@ h2 {
   gap: 0.5rem;
 }
 
-.info-card>div:first-of-type {
+.info-card > div:first-of-type {
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -158,6 +158,11 @@ h2 {
   width: 100%;
 }
 
+.delete-button {
+  color: rgb(255, 92, 92);
+  background: rgba(255, 92, 92, 0.1);
+}
+
 .coffee-button-selected {
   border-color: var(--border-highlight) !important;
 }
@@ -187,7 +192,6 @@ h2 {
 .stat-table {
   width: 100%;
   grid-column: span 2 / span 2;
-
 }
 
 .stat-text {
@@ -237,8 +241,6 @@ h2 {
   white-space: nowrap;
 }
 
-
-
 footer {
   padding: 2rem 0;
   display: flex;
@@ -257,9 +259,6 @@ footer {
   gap: 1rem;
 }
 
-
-
-
 @media (min-width: 640px) {
   main h1 {
     padding-top: 2.5rem;
@@ -277,6 +276,4 @@ footer {
     font-size: 3rem;
     line-height: 1;
   }
-
-
 }

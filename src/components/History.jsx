@@ -1,9 +1,14 @@
-import { calculateCurrentCaffeineLevel, getCaffeineAmount, timeSinceConsumption } from "../utils";
-
+import { useState } from "react";
+import Modal from "./Modal";
+import HistoryContent from "./HistoryContent";
+import HistoryItem from "./HistoryItem";
 import { useAuth } from "../context/AuthContext";
 
 export default function History() {
+  const [showModal, setShowModal] = useState(false);
+  const [modalData, setModalData] = useState({});
   const { globalData } = useAuth();
+
   return (
     <>
       <div className="section-header">
@@ -16,24 +21,23 @@ export default function History() {
       <div className="coffee-history">
         {Object.keys(globalData)
           .sort((a, b) => b - a)
-          .map((utcTime, index) => {
-            const coffee = globalData[utcTime];
-            const timeSinceConsume = timeSinceConsumption(utcTime);
-            const originalAmount = getCaffeineAmount(coffee.name);
-            const remainingAmount = calculateCurrentCaffeineLevel({
-              [utcTime]: coffee,
-            });
-
-            const summary = `${coffee.name} | ${timeSinceConsume} | ₹${coffee.cost} | ${remainingAmount}mg / ${originalAmount}mg`;
-
-            return (
-              <div title={summary} key={index}>
-                {" "}
-                <i className="fa-solid fa-mug-hot" />
-              </div>
-            );
-          })}
+          .map((utcTime) => (
+            <HistoryItem
+              key={utcTime}
+              utcTime={utcTime}
+              coffee={globalData[utcTime]}
+              onClick={(data) => {
+                setShowModal(true);
+                setModalData(data);
+              }}
+            />
+          ))}
       </div>
+      {showModal && (
+        <Modal handleClose={() => setShowModal(false)}>
+          <HistoryContent data={modalData} />
+        </Modal>
+      )}
     </>
   );
 }

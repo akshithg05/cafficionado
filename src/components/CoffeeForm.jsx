@@ -54,7 +54,7 @@ export default function CoffeeForm({ isAuthenticated }) {
           {
             [timeStamp]: newData,
           },
-          { merge: true } // instead of overwriting databse, merge this new entry to our db.
+          { merge: true } // instead of overwriting database, merge this new entry to our db.
         );
 
         setSelectedCoffee(null);
