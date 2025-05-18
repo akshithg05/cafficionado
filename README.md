@@ -1,7 +1,7 @@
 # ☕ Cafficionado
 
 **Track. Measure. Reflect.**  
-*Cafficionado* is a caffeine tracking app built for coffee lovers who want to quantify their consumption, visualize its effect on their body, and manage the cost of their habit—all in one responsive web interface.
+*Cafficionado* is a real-time caffeine tracking app built for coffee lovers who want to quantify their consumption, visualize its effect on their body, and manage the cost of their habit—all in one responsive web interface.
 
 ![image](https://github.com/user-attachments/assets/d5296f44-27e9-4bcc-8530-d10c456a5e20)
 
