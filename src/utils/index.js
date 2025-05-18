@@ -68,6 +68,9 @@ export const coffeeConsumptionHistory = {
 };
 
 export const coffeeOptions = [
+  { name: "Indian Filter Coffee (250ml)", caffeine: 100 },
+  { name: "Bru Coffee (250ml)", caffeine: 80 },
+  { name: "Nescafe (250ml)", caffeine: 90 },
   { name: "Espresso", caffeine: 63 },
   { name: "Double Espresso", caffeine: 126 },
   { name: "Americano", caffeine: 96 },

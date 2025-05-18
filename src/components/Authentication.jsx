@@ -56,12 +56,16 @@ export default function Authentication({ handleClose }) {
       }
       handleClose();
     } catch (err) {
+      console.log(err);
       if (err.code === "auth/invalid-email") {
         setEmailError(true);
         setErrorMessage("Please enter a valid email address.");
       } else if (err.code === "auth/invalid-credential") {
         setAuthError(true);
         setErrorMessage("User does not exist/ incorrect email or password");
+      } else if (err.code === "auth/email-already-in-use") {
+        setAuthError(true);
+        setErrorMessage("User already exists. Please sign in instead.");
       } else {
         setError(true);
         setErrorMessage("There was an unexpected error, try again later");

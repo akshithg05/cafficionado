@@ -66,6 +66,7 @@ export default function Stats() {
             ₹ <span className="stat-text">{stats.total_cost}</span>
           </p>
         </StatCard>
+        <h3>Top 3 coffees</h3>
         <table className="stat-table">
           <thead>
             <tr>
