@@ -16,7 +16,7 @@ export default function History() {
         <h2>History</h2>
       </div>
       <p>
-        <i>Hover for more information!</i>
+        <i>Hover or Click for more information!</i>
       </p>
       <div className="coffee-history">
         {Object.keys(globalData)
