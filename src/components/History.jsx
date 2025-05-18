@@ -9,6 +9,10 @@ export default function History() {
   const [modalData, setModalData] = useState({});
   const { globalData } = useAuth();
 
+  function handleClose() {
+    setShowModal(false);
+  }
+
   return (
     <>
       <div className="section-header">
@@ -34,8 +38,8 @@ export default function History() {
           ))}
       </div>
       {showModal && (
-        <Modal handleClose={() => setShowModal(false)}>
-          <HistoryContent data={modalData} />
+        <Modal handleClose={handleClose}>
+          <HistoryContent data={modalData} handleClose={handleClose} />
         </Modal>
       )}
     </>

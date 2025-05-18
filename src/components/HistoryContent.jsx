@@ -3,10 +3,10 @@ import { doc, setDoc } from "firebase/firestore";
 import { useAuth } from "../context/AuthContext";
 import { db } from "../../firebase";
 
-export default function HistoryContent({ data }) {
+export default function HistoryContent({ data, handleClose }) {
   const { globalUser, globalData, setGlobalData } = useAuth();
 
-  const [newCost, setNewCost] = useState(null);
+  const [newCost, setNewCost] = useState(data.cost);
   const [isEditClicked, setIsEditClicked] = useState(false);
 
   async function handleDelete() {
@@ -20,21 +20,44 @@ export default function HistoryContent({ data }) {
       const res = await setDoc(userRef, newGlobalObject);
     } catch (err) {
       console.log(err);
+    } finally {
+      handleClose();
     }
   }
 
-  async function handleEditCost() {
+  function handleEditCost() {
     setIsEditClicked(true);
-    const newGlobalData = {
-      ...(globalData || {}),
-    };
+    setNewCost(0);
+  }
 
-    const newData = {
-      name: globalData[data.utcTime].name,
-      cost: globalData[data.utcTime].cost,
-    };
+  async function updateCost() {
+    try {
+      const newGlobalData = {
+        ...(globalData || {}),
+      };
 
-    console.log(newData);
+      const newData = {
+        name: globalData[data?.utcTime].name,
+        cost: newCost,
+      };
+
+      newGlobalData[data.utcTime] = newData;
+      setGlobalData(newGlobalData);
+      data.cost = newCost;
+
+      const userRef = doc(db, "users", globalUser.uid);
+      const res = await setDoc(
+        userRef,
+        {
+          [data?.utcTime]: newData,
+        },
+        { merge: true }
+      );
+    } catch (err) {
+      console.log(err);
+    } finally {
+      handleClose();
+    }
   }
 
   return (
@@ -66,7 +89,16 @@ export default function HistoryContent({ data }) {
           </thead>
         </table>
       </div>
-      <div>{isEditClicked && <input placeholder="Enter new cost" value={newCost} />}</div>
+      <div>
+        {isEditClicked && (
+          <input
+            placeholder="0"
+            value={newCost || 0}
+            onChange={(e) => setNewCost(parseInt(e.target.value))}
+            type="number"
+          />
+        )}
+      </div>
 
       <div
         style={{
@@ -81,6 +113,7 @@ export default function HistoryContent({ data }) {
           <button
             onClick={() => {
               setIsEditClicked(false);
+              updateCost();
             }}
           >
             Save cost

@@ -38,14 +38,11 @@ export default function CoffeeForm({ isAuthenticated }) {
           name: selectedCoffee,
           cost: coffeeCost,
         };
-        console.log(newData);
 
         newGlobalData[timeStamp] = newData;
-        console.log(newGlobalData);
 
         // update global state
         setGlobalData(newGlobalData);
-        console.log(globalUser);
 
         // persist the data in firebase firestore
         const userRef = doc(db, "users", globalUser.uid);
@@ -56,13 +53,13 @@ export default function CoffeeForm({ isAuthenticated }) {
           },
           { merge: true } // instead of overwriting database, merge this new entry to our db.
         );
-
+      } catch (err) {
+        console.log(err);
+      } finally {
         setSelectedCoffee(null);
         setCoffeeCost(0);
         setHour(0);
         setMin(0);
-      } catch (err) {
-        console.log(err);
       }
     }
   }
@@ -133,7 +130,7 @@ export default function CoffeeForm({ isAuthenticated }) {
         </select>
       )}
 
-      <h4>Add the cost</h4>
+      <h4>Add the cost (₹)</h4>
       <input
         className="w-full"
         type="number"
@@ -146,7 +143,7 @@ export default function CoffeeForm({ isAuthenticated }) {
       <div className="time-entry">
         <div>
           <h6>Hours</h6>
-          <select id="hours-select" onChange={(e) => setHour(e.target.value)}>
+          <select id="hours-select" onChange={(e) => setHour(e.target.value)} value={hour}>
             {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23].map(
               (hour, index) => {
                 return (
@@ -161,7 +158,7 @@ export default function CoffeeForm({ isAuthenticated }) {
 
         <div>
           <h6>Mins</h6>
-          <select id="mins-select" onChange={(e) => setMin(e.target.value)}>
+          <select id="mins-select" onChange={(e) => setMin(e.target.value)} value={min}>
             {[0, 5, 10, 15, 30, 45].map((min, index) => {
               return (
                 <option key={index} value={min}>
